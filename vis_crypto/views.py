@@ -7,6 +7,14 @@ def index(request):
     coin_market_chart_data = fetch_coin_market_chart()
     date_time_strings = extract_price_data(coin_market_chart_data)
     actual_price = [lst[1] for lst in coin_market_chart_data["prices"]]
+    
+    coin_list_data = fetch_coin_list()
+    coin_ids = extract_coin_ids(coin_list_data)
+
+    currency_symbols = [
+        'usd', 'eur', 'jpy', 'gbp', 'aud', 'cad', 'chf', 'cny', 'sek', 'nzd',
+        'mxn', 'sgd', 'hkd', 'nok', 'krw', 'inr', 'rub', 'brl', 'zar', 'try'
+    ]
 
     return render(request, "vis_crypto/base.html", {
         'content1': {
@@ -15,6 +23,8 @@ def index(request):
                 'crypData': date_time_strings[0:100],
                 'actualPrice': actual_price[0:100],
                 'currency': 'usd',
+                'coin_id_list': coin_ids,
+                'currency_symbols': currency_symbols
             },
         }
     })
@@ -38,3 +48,16 @@ def extract_price_data(data):
     date_times = [datetime.fromtimestamp(ts) for ts in timestamps]
     date_time_strings = [dt.strftime('%A %d %B') for dt in date_times]
     return date_time_strings
+
+
+def fetch_coin_list():
+    api_endpoint = "https://api.coingecko.com/api/v3/coins/list"
+    params = {
+        'x_cg_demo_api_key': os.getenv('COINGECK_API_KEY')
+    }
+    response = requests.get(api_endpoint, params=params).json()
+    return response
+
+def extract_coin_ids(coin_list):
+    coin_ids = [coin["id"] for coin in coin_list]
+    return coin_ids
