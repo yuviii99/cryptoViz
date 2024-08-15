@@ -1,5 +1,5 @@
 <div class="chart-container">
-    
+
     <form id="dropdownForm" style="margin-bottom: 20px; width: 800px;">
         <select id="dropdown" name="dropdown">
             <option value="" disabled selected>Select A Cryptocurrency</option>
@@ -28,6 +28,48 @@
     var data = {{ stuff.actualPrice|slice:":100"|safe }};
     var ctx = document.getElementById('chart').getContext('2d');
     var currentChart;
+
+    function fetchData() {
+        var selectedOption = document.getElementById('dropdown').value;
+        var selectedCurrency = document.getElementById('dropdown_currency').value;
+        
+        var formData = new FormData();
+        formData.append('selected_option', selectedOption);
+        formData.append('selected_currency', selectedCurrency);
+        
+        fetch("{% url 'index' %}", {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok.');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data);
+
+            // Update the chart data variables with the new data received from the server
+            labels = data.crypData;
+            data = data.actualPrice;
+
+            // Update the chart using the updated data
+            if (currentChart) {
+                currentChart.data.labels = labels;
+                currentChart.data.datasets[0].data = data;
+                currentChart.options.scales.y.title.text = selectedCurrency; // Update y-axis title with selected currency
+                currentChart.update();
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+
+    // Event listeners for both dropdowns
+    document.getElementById('dropdown').addEventListener('change', fetchData);
+    document.getElementById('dropdown_currency').addEventListener('change', fetchData);
 
     function createLineChart(){
         currentChart = new Chart(ctx,{
