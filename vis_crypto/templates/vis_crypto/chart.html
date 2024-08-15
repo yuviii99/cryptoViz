@@ -39,7 +39,7 @@
         
         fetch("{% url 'index' %}", {
             method: 'POST',
-            body: formData
+            body: formData,
         })
         .then(response => {
             if (!response.ok) {
