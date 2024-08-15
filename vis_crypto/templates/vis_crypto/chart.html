@@ -1,0 +1,122 @@
+<div class="chart-container">
+    <button onclick="changeToLine()">Line Graph</button>
+    <button onclick="changeToBar()">Bar Graph</button>
+    <input type="range" min="1" max="100" value="10" class="slider" id="mySlider">
+    <div id="chart-container">
+        <canvas id="chart" width="1200" height="800"></canvas>
+    </div>
+</div>
+
+<script>
+    var labels = {{ stuff.crypData|slice:":100"|safe }};
+    var data = {{ stuff.actualPrice|slice:":100"|safe }};
+    var ctx = document.getElementById('chart').getContext('2d');
+    var currentChart;
+
+    function createLineChart(){
+        currentChart = new Chart(ctx,{
+            type: 'line',
+            data:{
+                labels: labels,
+                datasets: [{
+                    label: 'Price in {{stuff.currency}}',
+                    data: data,
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }],
+            },
+            options:{
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Day'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: '{{stuff.currency}}'
+                        }
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '{{stuff.currency_title}}',
+                        font: {
+                            size: 18
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    function createBarChart(){
+        currentChart = new Chart(ctx,{
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Actual Price',
+                    data: data,
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Day' // Replace with your x-axis label
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: '{{stuff.currency}}' // Replace with your y-axis label
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    function changeToLine(){
+        if(currentChart){
+            currentChart.destroy();
+        }
+        createLineChart();
+     }
+
+    function changeToBar() {
+        if (currentChart) {
+            currentChart.destroy();
+        }
+        createBarChart();
+    }
+
+    createLineChart();
+
+    function updateData() {
+        var sliderValue = document.getElementById("mySlider").value;
+        var slicedLabels = labels.slice(0, sliderValue);
+        var slicedActualPrice = data.slice(0, sliderValue);
+
+        if(currentChart){
+            currentChart.data.labels = slicedLabels;
+            currentChart.data.datasets[0].data = slicedActualPrice;
+
+            currentChart.update();
+        }
+    }
+    document.getElementById("mySlider").addEventListener("input", updateData);
+</script>
