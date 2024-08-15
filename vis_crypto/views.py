@@ -15,6 +15,6 @@ def fetch_coin_market_chart(crypto_coin='bitcoin', versus_currency='usd'):
     headers={
         'accept': 'application/json',
     }
-    api_endpoint = f'https://api.coingecko.com/api/v3/coins/{crypto_coin}/markets'
+    api_endpoint = f'https://api.coingecko.com/api/v3/coins/{crypto_coin}/market_chart'
     response = requests.get(api_endpoint, params=query_params, headers=headers).json()
     return response
