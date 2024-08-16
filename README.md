@@ -1,6 +1,6 @@
 # CRYPTOVIZ
 
-A Django application that utilize CoinGecko API to fetch real-time cryptocurrency data and lets user interact with visualisations thorugh vanilla JavaScript.
+A Django application that utilize CoinGecko API to fetch real-time cryptocurrency data and lets user interact with visualisations using Charts.js
 
 ## Demo
 
