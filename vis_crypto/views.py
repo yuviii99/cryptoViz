@@ -31,6 +31,8 @@ def index(request):
         
         top_coins_data = fetch_top_coins()
         
+        top_ten_cryptocurrencies = top_coins_data[0:10]
+        
         exchange_rates = fetch_exchange_rates()
 
         currency_symbols = [
@@ -59,6 +61,12 @@ def index(request):
                 'template_name': 'vis_crypto/barView.html',
                 'data': {
                     'bar_view_data': top_coins_data
+                }
+            },
+            'content4': {
+                'template_name': 'vis_crypto/pieChart.html',
+                'data':{
+                    'top_ten_crypto': top_ten_cryptocurrencies,
                 }
             }
         })
