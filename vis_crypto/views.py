@@ -30,6 +30,8 @@ def index(request):
         coin_ids = extract_coin_ids(coin_list_data)
         
         top_coins_data = fetch_top_coins()
+        
+        exchange_rates = fetch_exchange_rates()
 
         currency_symbols = [
             'usd', 'eur', 'jpy', 'gbp', 'aud', 'cad', 'chf', 'cny', 'sek', 'nzd',
@@ -46,6 +48,12 @@ def index(request):
                     'coin_id_list': coin_ids,
                     'currency_symbols': currency_symbols
                 },
+            },
+            'content2': {
+              'template_name': 'vis_crypto/exchange.html',
+              'data':{
+                  'exchange_rates': exchange_rates
+              }  
             },
             'content3': {
                 'template_name': 'vis_crypto/barView.html',
@@ -101,3 +109,8 @@ def fetch_top_coins():
     }
     market_data = requests.get(url, params=params).json()
     return list(market_data)
+
+def fetch_exchange_rates():
+    url = "https://api.coingecko.com/api/v3/exchange_rates"
+    exchange_rates = requests.get(url).json()
+    return exchange_rates
