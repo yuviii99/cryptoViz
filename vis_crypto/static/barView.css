@@ -1,0 +1,105 @@
+.sidebar{
+    float: left;
+    width: 400px;
+    height: 680px;
+    padding: 20px;
+    background-color: #fff; /* Set the background color to white */
+    font-family: Arial, sans-serif;
+    border-right: 1px solid #ccc;
+ 
+    border-radius: 8px;
+
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+ 
+.sidebar h1{
+    margin-bottom: 20px;
+    text-align: center;
+}
+ 
+.sidebar ul{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar li{
+    display: none;
+    margin-bottom: 5px;
+    font-size: 10px;
+    cursor: pointer;
+    color: #333;
+    padding: 4px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar li.show{
+    display: block;
+}
+
+.sidebar li:hover{
+    color: #fff;
+    background-color: #333;
+}
+
+.navigation{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.arrow{
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    background-color: #333;
+    color: #fff;
+}
+
+ /* Styles for the crypto data */
+.crypto-data{
+    margin-left: 270px; /* Adjust for the sidebar width */
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.crypto-item{
+    width: 100%;
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.crypto-item:hover{
+    background-color: #000000;
+}
+
+.crypto-name{
+    font-size: 14px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.crypto-market-cap{
+    font-size: 12px;
+    color: #666;
+}
+
+.crypto-market-change{
+    font-size: 12px;
+    font-weight: bold;
+    color: #333;
+}
+
+.caret-up{
+    color: green;
+}
+
+.caret-down{
+    color: red;
+}
