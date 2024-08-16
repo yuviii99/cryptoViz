@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="{% static 'base.css' %}">
         <link rel="stylesheet" href="{% static 'chart.css' %}">
         <link rel="stylesheet" href="{% static 'barView.css' %}">
+        <link rel="stylesheet" href="{% static 'exchange.css' %}">
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </head>
     <body style="margin-top:150px">
@@ -17,6 +18,9 @@
             </div>
             <div class="grid-item">
                 {% include content3.template_name with data=content3.data.bar_view_data %}
+            </div>
+            <div class="grid-item">
+                {% include content2.template_name with exchange_rates=content2.data.exchange_rates %}
             </div>
         </div>
     </div>
