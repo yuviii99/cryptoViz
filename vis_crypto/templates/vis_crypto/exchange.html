@@ -1,0 +1,91 @@
+<div class="exchange-container">
+    <!-- Exchange container header -->
+    <h4>Exchange Coins</h4>
+    <!-- Currency selection section -->
+    <div class="currency-selection">
+        <!-- Sell currency selection -->
+        <div>
+            <!-- Sell currency label -->
+            <p class="text-red-500 font-semibold mr-3 text-xs">Sell</p>
+            <!-- Dropdown for selecting sell currency -->
+            <select id="sellCurrency" class="sell-select">
+                <!-- Default option -->
+                <option value="" disabled selected>Select currency</option>
+                <!-- Loop through sell currencies -->
+                {% for key, value in exchange_rates.rates.items %}
+                    <!-- Option for each sell currency -->
+                    <option value="{{ key }}">{{ value.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <!-- Buy currency selection -->
+        <div>
+            <!-- Buy currency label -->
+            <p class="text-green-300 font-semibold mr-3 text-xs">Buy</p>
+            <!-- Dropdown for selecting buy currency -->
+            <select id="buyCurrency" class="buy-select">
+                <!-- Default option -->
+                <option value="" disabled selected>Select currency</option>
+                <!-- Loop through buy currencies -->
+                {% for key, value in exchange_rates.rates.items %}
+                    <!-- Option for each buy currency -->
+                    <option value="{{ key }}">{{ value.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <!-- Value input section -->
+    <div>
+        <!-- Label for value input -->
+        <label for="enteredValue" style="font-size: 12px; color: #888;">Enter value</label>
+        <!-- Input field for entering value -->
+        <input type="number" id="enteredValue" class="entered-value">
+        <!-- Placeholder for displaying result value -->
+        <p id="resultValue" class="result-value"></p>
+        <!-- Placeholder for displaying error message -->
+        <p id="errorMessage" class="error-message" style="color: red;"></p>
+    </div>
+    <!-- Exchange button section -->
+    <div style="text-align: center;">
+        <!-- Exchange button -->
+        <button id="exchangeButton" class="exchange-button">Exchange</button>
+    </div>
+</div>
+
+<script>
+    // Function to perform currency conversion
+    function convert() {
+        // Exchange rates data
+        var ratesData = {{ exchange_rates.rates | safe }};
+        // Selected sell currency
+        const sellCurrency = document.getElementById('sellCurrency').value;
+        // Selected buy currency
+        const buyCurrency = document.getElementById('buyCurrency').value;
+        // Entered value for conversion
+        const enteredValue = parseFloat(document.getElementById('enteredValue').value);
+        // Error message element
+        const errorMessage = document.getElementById('errorMessage');
+        // Result value element
+        const resultValue = document.getElementById('resultValue');
+
+        // Clear previous error message
+        errorMessage.innerText = '';
+
+        // Check if the entered value is negative
+        if (enteredValue < 0) {
+            // Display error message
+            errorMessage.innerText = 'Entered value cannot be negative.';
+            // Clear result value
+            resultValue.innerText = '';
+            // Stop the function execution
+            return;
+        }
+
+        // Calculate the result value
+        const result = (enteredValue * ratesData[buyCurrency].value) / ratesData[sellCurrency].value;
+        // Display the result value with two decimal places and buy currency
+        resultValue.innerText = `${result.toFixed(2)} ${buyCurrency}`;
+    }
+    // Event listener for exchange button click
+    document.getElementById('exchangeButton').addEventListener('click', convert);
+</script>
