@@ -4,4 +4,4 @@ A Django application that utilize CoinGecko API to fetch real-time cryptocurrenc
 
 ## Demo
 
-<video src="demo.mov" width="1000" height="520" controls></video>
+<video src="demo.mov" width="600" height="420" controls></video>
