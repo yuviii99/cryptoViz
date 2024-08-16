@@ -12,7 +12,10 @@
         <link rel="stylesheet" href="{% static 'pieChart.css' %}">
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </head>
-    <body style="margin-top:150px">
+    <body style="margin-top:50px">
+        <div class="eight">
+            <h1>CryptoViz</h1>
+        </div>
     <div class="grid-container">
             <div class="grid-item">
                 {% include content1.template_name with stuff=content1.data %}
