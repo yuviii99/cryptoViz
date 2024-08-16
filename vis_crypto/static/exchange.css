@@ -1,0 +1,82 @@
+.exchange-container{
+    max-width: 862px;
+    width:862px;
+    max-height: 600px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+ 
+ 
+.exchange-container h4{
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+ 
+ 
+.currency-selection{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+ 
+ 
+.sell-select,.buy-select{
+    width: 180px;
+    height: 40px;
+    font-weight: 600;
+    border-radius: 6px;
+    padding: 8px;
+    color: #333;
+    background-color: #f3f4f6;
+    border: 1px solid #ccc;
+    outline: none;
+}
+ 
+ 
+.entered-value{
+    width: 95%;
+    height: 40px;
+    border-radius: 6px;
+    padding: 8px;
+    font-size: 14px;
+    color: #333;
+    border: 1px solid #ccc;
+    outline: none;
+    margin-bottom: 10px;
+    margin-left: 5px;
+}
+ 
+ 
+.result-value{
+    color: #4caf50;
+    font-size: 16px;
+    margin-top: 10px;
+    text-align: center;
+}
+ 
+ 
+.exchange-button{
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    outline: none;
+    display: block;
+    margin: 0 auto;
+    transition: background-color 0.3s ease;
+}
+ 
+ 
+.exchange-button:hover{
+    background-color: #0056b3;
+}
+ 
