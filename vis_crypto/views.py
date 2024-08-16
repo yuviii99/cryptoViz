@@ -28,6 +28,8 @@ def index(request):
 
         coin_list_data = fetch_coin_list()
         coin_ids = extract_coin_ids(coin_list_data)
+        
+        top_coins_data = fetch_top_coins()
 
         currency_symbols = [
             'usd', 'eur', 'jpy', 'gbp', 'aud', 'cad', 'chf', 'cny', 'sek', 'nzd',
@@ -44,6 +46,12 @@ def index(request):
                     'coin_id_list': coin_ids,
                     'currency_symbols': currency_symbols
                 },
+            },
+            'content3': {
+                'template_name': 'vis_crypto/barView.html',
+                'data': {
+                    'bar_view_data': top_coins_data
+                }
             }
         })
 
@@ -79,3 +87,17 @@ def fetch_coin_list():
 def extract_coin_ids(coin_list):
     coin_ids = [coin["id"] for coin in coin_list]
     return coin_ids
+
+def fetch_top_coins():
+    url = "https://api.coingecko.com/api/v3/coins/markets"
+    params = {
+        'vs_currency': 'usd',
+        'order': 'market_cap_desc',
+        'per_page': 100,
+        'page': 1,
+        'sparkline': False,
+        'locale': 'en',
+        'x_cg_demo_api_key': os.getenv('COINGECK_API_KEY')
+    }
+    market_data = requests.get(url, params=params).json()
+    return list(market_data)
