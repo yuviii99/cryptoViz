@@ -7,12 +7,16 @@
         <title>Crypto Currency Visualization</title>
         <link rel="stylesheet" href="{% static 'base.css' %}">
         <link rel="stylesheet" href="{% static 'chart.css' %}">
+        <link rel="stylesheet" href="{% static 'barView.css' %}">
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </head>
     <body style="margin-top:150px">
     <div class="grid-container">
             <div class="grid-item">
-            {% include content1.template_name with stuff=content1.data %}
+                {% include content1.template_name with stuff=content1.data %}
+            </div>
+            <div class="grid-item">
+                {% include content3.template_name with data=content3.data.bar_view_data %}
             </div>
         </div>
     </div>

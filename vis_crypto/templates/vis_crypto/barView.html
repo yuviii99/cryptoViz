@@ -1,0 +1,82 @@
+<div class="sidebar">
+    <!-- Sidebar header -->
+    <h1>Crypto Data</h1>
+    <!-- Unordered list for displaying crypto data -->
+    <ul id="cryptoList">
+        <!-- Loop through crypto data to display each item -->
+        {% for cryptoData in data %}
+            <li>
+                <!-- Commented out code to display crypto name and symbol -->
+                <div class="crypto-item">
+                    <!-- Crypto image -->
+                    <img src="{{ cryptoData.image }}" alt="{{ cryptoData.name }}" width="20" height="20">
+                    <!-- Crypto name -->
+                    <span class="crypto-name">{{ cryptoData.name }}</span>
+                    <div>
+                        <!-- Crypto market cap -->
+                        <span class="crypto-market-cap">Mkt.Cap ${{ cryptoData.market_cap | floatformat:2 }}</span>
+                        <!-- Crypto market cap change percentage -->
+                        <span class="crypto-market-change {% if cryptoData.market_cap_change_percentage_24h > 0 %}caret-up{% else %}caret-down{% endif %}">
+                            <!-- Check if market cap change is positive or negative -->
+                            {% if cryptoData.market_cap_change_percentage_24h > 0 %}
+                                <!-- Display caret-up icon for positive change -->
+                                <i class="fa-solid fa-caret-up"></i>
+                            {% else %}
+                                <!-- Display caret-down icon for negative change -->
+                                <i class="fa-solid fa-caret-down"></i>
+                            {% endif %}
+                            <!-- Display market cap change percentage -->
+                            {{ cryptoData.market_cap_change_percentage_24h | floatformat:2 }}%
+                        </span>
+                    </div>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+    <!-- Navigation arrows -->
+    <div class="navigation">
+        <!-- Previous arrow -->
+        <span class="arrow prev">&lt;</span>
+        <!-- Next arrow -->
+        <span class="arrow next">&gt;</span>
+    </div>
+</div>
+
+<script>
+    // Select all list items inside the cryptoList
+    const cryptoList = document.querySelectorAll('#cryptoList li');
+    // Initialize start index for pagination
+    let startIndex = 0;
+    // Number of items to show per page
+    const itemsToShow = 10;
+
+    // Function to show items based on startIndex
+    function showItems(startIndex) {
+        for (let i = 0; i < cryptoList.length; i++) {
+            if (i >= startIndex && i < startIndex + itemsToShow) {
+                cryptoList[i].classList.add('show');
+            } else {
+                cryptoList[i].classList.remove('show');
+            }
+        }
+    }
+
+    // Event listener for next button click
+    document.querySelector('.next').addEventListener('click', () => {
+        if (startIndex + itemsToShow < cryptoList.length) {
+            startIndex += itemsToShow;
+            showItems(startIndex);
+        }
+    });
+
+    // Event listener for previous button click
+    document.querySelector('.prev').addEventListener('click', () => {
+        if (startIndex - itemsToShow >= 0) {
+            startIndex -= itemsToShow;
+            showItems(startIndex);
+        }
+    });
+
+    // Show the first set of items on page load
+    showItems(startIndex);
+</script>
